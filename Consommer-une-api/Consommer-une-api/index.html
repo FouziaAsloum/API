@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Consommation API avec Fetch</title>
-		<link rel="stylesheet" href="css/style.css" />
-	</head>
-	<body>
-		<div class="title">
-			<h1>Consommer une API avec Fetch</h1>
-		</div>
-		<script src="js/script.js"></script>
-	</body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consommer une API avec Fetch</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Consommer une API avec Fetch</h1>
+    <ul id="user-list"></ul>
+  </div>
+
+  <!-- La div modale pour afficher les informations détaillées -->
+  <div class="modal" id="user-modal">
+    <div class="modal-content" id="user-modal-content">
+      <!-- Les informations détaillées de l'utilisateur seront insérées ici -->
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
 </html>
