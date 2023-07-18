@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   async function fetchUsers() {
     try {
       const response = await fetch('https://reqres.in/api/users?per_page=12'); // Charger les données à partir du fichier api.json
+      console.log(response);
       const data = await response.json();
       return data;
     } catch (error) {
@@ -16,22 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Fonction pour afficher les informations détaillées d'un utilisateur dans la div modale
-  function showUserDetails(user) {
-    userModalContent.innerHTML = `
-      <img src="${user.avatar}" alt="Avatar de ${user.first_name}">
-      <h2>${user.first_name} ${user.last_name}</h2>
-      <p><strong>Email:</strong> ${user.email}</p>
-      <p><strong>ID:</strong> ${user.id}</p>
-      <!-- Ajoutez d'autres propriétés ici si nécessaire -->
-    `;
+  //   function showUserDetails(user) {
+  //     userModalContent.innerHTML = `
+  //       <img src="${user.avatar}" alt="Avatar de ${user.first_name}">
+  //       <h2>${user.first_name} ${user.last_name}</h2>
+  //       <p><strong>Email:</strong> ${user.email}</p>
+  //       <p><strong>ID:</strong> ${user.id}</p>
+  //       <!-- Ajoutez d'autres propriétés ici si nécessaire -->
+  //     `;
 
-    userModal.style.display = 'flex';
-  }
+  //   userModal.style.display = 'flex';
+  // }
 
   // Fonction pour masquer la div modale
-  function hideUserModal() {
-    userModal.style.display = 'none';
-  }
+  // function hideUserModal() {
+  //   userModal.style.display = 'none';
+  // }
 
   // Fonction pour afficher les utilisateurs sur la page
   async function displayUsers() {
@@ -76,25 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
       })
     });
-
-    // Ajouter un gestionnaire d'événements pour afficher les détails de l'utilisateur au clic
-    // userList.addEventListener('click', (event) => {
-    //   const targetUser = event.target.closest('li');
-    //   if (targetUser) {
-    //     const userId = targetUser.getAttribute('data-id');
-    //     const user = users.find(u => u.id === parseInt(userId));
-    //     if (user) {
-    //       showUserDetails(user);
-    //     }
-    //   }
-    // });
-
-    // // Ajouter un gestionnaire d'événements pour masquer la div modale au clic en dehors de celle-ci
-    // userModal.addEventListener('click', (event) => {
-    //   if (event.target === userModal) {
-    //     hideUserModal();
-    //   }
-    // });
   }
 
   displayUsers();
