@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fonction pour récupérer les données de l'API
   async function fetchUsers() {
     try {
-      const response = await fetch('api.json'); // Charger les données à partir du fichier api.json
+      const response = await fetch('https://reqres.in/api/users?per_page=12'); // Charger les données à partir du fichier api.json
       const data = await response.json();
       return data;
     } catch (error) {
@@ -36,37 +36,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fonction pour afficher les utilisateurs sur la page
   async function displayUsers() {
     const users = await fetchUsers();
+    console.log(users.data);
     if (users.length === 0) {
       userList.innerHTML = '<li>Aucun utilisateur trouvé.</li>';
       return;
     }
 
-    userList.innerHTML = users.map(user => {
-      return `<li data-id="${user.id}">
-        <span>Nom:</span> ${user.first_name} ${user.last_name}<br>
-        <span>Email:</span> ${user.email}<br>
-        <img src="${user.avatar}" alt="Avatar de ${user.first_name}">
-      </li>`;
-    }).join('');
+    users.data.forEach(element => {
+      // console.log(element);
+      userList.innerHTML += `<li data-id="${element.id}">
+        <span>Nom:</span>${element.first_name} ${element.last_name}<br>
+          <span>Email:</span>${element.email}<br>
+            <img src="${element.avatar}" alt="Avatar de ${element.first_name}">
+            </li>`;
+    });
+
+    let lis = document.querySelectorAll("li");
+    console.log(lis);
+    lis.forEach((element, index) => {
+      element.addEventListener("click", () => {
+        userModal.classList.add("active");
+        users.data.forEach(() => {
+          const idpers = users.data[index];
+          userModalContent.innerHTML = `
+          <div>
+          <button id= "back">
+          Back
+          </button>
+          </div>
+          <li data-id="${idpers.id}">
+          <span>Nom:</span>${idpers.first_name} ${idpers.last_name}<br>
+            <span>Email:</span>${idpers.email}<br>
+              <img src="${idpers.avatar}" alt="Avatar de ${idpers.first_name}">
+              </li>`;
+        })
+        let back = document.getElementById("back");
+        back.addEventListener("click", () => {
+          userModal.classList.remove("active");
+        })
+      })
+    });
 
     // Ajouter un gestionnaire d'événements pour afficher les détails de l'utilisateur au clic
-    userList.addEventListener('click', (event) => {
-      const targetUser = event.target.closest('li');
-      if (targetUser) {
-        const userId = targetUser.getAttribute('data-id');
-        const user = users.find(u => u.id === parseInt(userId));
-        if (user) {
-          showUserDetails(user);
-        }
-      }
-    });
+    // userList.addEventListener('click', (event) => {
+    //   const targetUser = event.target.closest('li');
+    //   if (targetUser) {
+    //     const userId = targetUser.getAttribute('data-id');
+    //     const user = users.find(u => u.id === parseInt(userId));
+    //     if (user) {
+    //       showUserDetails(user);
+    //     }
+    //   }
+    // });
 
-    // Ajouter un gestionnaire d'événements pour masquer la div modale au clic en dehors de celle-ci
-    userModal.addEventListener('click', (event) => {
-      if (event.target === userModal) {
-        hideUserModal();
-      }
-    });
+    // // Ajouter un gestionnaire d'événements pour masquer la div modale au clic en dehors de celle-ci
+    // userModal.addEventListener('click', (event) => {
+    //   if (event.target === userModal) {
+    //     hideUserModal();
+    //   }
+    // });
   }
 
   displayUsers();
